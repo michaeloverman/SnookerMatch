@@ -48,8 +48,8 @@ public class ScoringActivity extends AppCompatActivity {
 
         mPlayer1Label.setText(mPlayer1.getName());
         mPlayer2Label.setText(mPlayer2.getName());
-        mPlayer1Score.setText(mPlayer1.getScore());
-        mPlayer2Score.setText(mPlayer2.getScore());
+        mPlayer1Score.setText(mPlayer1.getScore() + "");
+        mPlayer2Score.setText(mPlayer2.getScore() + "");
 
     }
 }
