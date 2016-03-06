@@ -47,4 +47,13 @@ public class Player {
     public void setBreakScore(int breakScore) {
         mBreakScore = breakScore;
     }
+
+    public void incrementScore(int score) {
+        mScore += score;
+        mBreakScore += score;
+    }
+
+    public void zeroBreakScore() {
+        mBreakScore = 0;
+    }
 }
