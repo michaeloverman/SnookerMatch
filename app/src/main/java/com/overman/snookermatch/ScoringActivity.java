@@ -1,14 +1,14 @@
 package com.overman.snookermatch;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class ScoringActivity extends AppCompatActivity {
 
@@ -17,8 +17,8 @@ public class ScoringActivity extends AppCompatActivity {
     private Player mPlayer2;
     private Match mMatch;
 
-    @Bind(R.id.player1Label) TextView mPlayer1Label;
-    @Bind(R.id.player2Label)TextView mPlayer2Label;
+    @Bind(R.id.player1Name) TextView mPlayer1Label;
+    @Bind(R.id.player2Name)TextView mPlayer2Label;
     @Bind(R.id.player1Score) TextView mPlayer1Score;
     @Bind(R.id.player2Score) TextView mPlayer2Score;
     @Bind(R.id.redBall) ImageView mRedBall;
@@ -31,14 +31,20 @@ public class ScoringActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "in ScoringActivity");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoring);
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
         mPlayer1 = new Player(intent.getStringExtra("name1"));
+//        Log.d(TAG, "mPlayer1 name: " + mPlayer1.getName());
         mPlayer2 = new Player(intent.getStringExtra("name2"));
+//        Log.d(TAG, "mPlayer2 name: " + mPlayer2.getName());
+
         mMatch = new Match(mPlayer1, mPlayer2, intent.getIntExtra("frames", 1));
+        Log.d(TAG, "Match created " + mMatch.getPlayer1().getName() + ", " + mMatch.getPlayer2().getName() + ", best of " + mMatch.getFrames());
 
         mPlayer1Label.setText(mPlayer1.getName());
         mPlayer2Label.setText(mPlayer2.getName());

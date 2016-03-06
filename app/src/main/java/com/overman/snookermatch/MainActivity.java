@@ -1,13 +1,16 @@
 package com.overman.snookermatch;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
+    private final String TAG = MainActivity.class.getSimpleName();
+
     private Button mStartButton;
     private EditText mPlayer1Name;
     private EditText mPlayer2Name;
@@ -21,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         mPlayer1Name = (EditText)findViewById(R.id.editPlayer1);
         mPlayer2Name = (EditText)findViewById(R.id.editPlayer2);
         mFrames = (EditText)findViewById(R.id.numberOfFrames);
+        mStartButton = (Button)findViewById(R.id.startMatchButton);
 
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startScoring() {
+        Log.d(TAG, "in startScoreing()");
+
         Intent intent = new Intent(this, ScoringActivity.class);
         intent.putExtra("name1", mPlayer1Name.getText().toString());
         intent.putExtra("name2", mPlayer2Name.getText().toString());

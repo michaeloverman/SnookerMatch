@@ -20,9 +20,9 @@ public class Player {
         return mName;
     }
 
-    public void setName(String name) {
-        mName = name;
-    }
+//    public void setName(String name) {
+//        mName = name;
+//    }
 
     public int getScore() {
         return mScore;
