@@ -12,22 +12,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="Player O&apos;One"
         android:id="@+id/player1Name"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textSize="20sp"/>
+        android:textSize="30sp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="Player O&apos;Two"
         android:id="@+id/player2Name"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:textSize="20sp"/>
+        android:textSize="30sp"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -114,5 +114,32 @@
             android:layout_weight="1"
             android:src="@drawable/black_ball"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(39)"
+        android:id="@+id/bestOfFrames"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="19"
+        android:id="@+id/player1FramesWon"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/bestOfFrames"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="17"
+        android:id="@+id/player2FramesWon"
+        android:layout_alignParentTop="true"
+        android:textSize="20sp"
+        android:layout_toRightOf="@+id/bestOfFrames"/>
 
 </RelativeLayout>

@@ -21,9 +21,13 @@ public class ScoringActivity extends AppCompatActivity {
     private Player mPlayer2;
     private Match mMatch;
     private int mActivePlayer;
+    private Boolean mRedBallOn = true;
 
     @Bind(R.id.player1Name) TextView mPlayer1Label;
-    @Bind(R.id.player2Name)TextView mPlayer2Label;
+    @Bind(R.id.player2Name) TextView mPlayer2Label;
+    @Bind(R.id.bestOfFrames) TextView mTotalFrames;
+    @Bind(R.id.player1FramesWon) TextView mPlayer1FramesWon;
+    @Bind(R.id.player2FramesWon) TextView mPlayer2FramesWon;
     @Bind(R.id.player1Score) TextView mPlayer1Score;
     @Bind(R.id.player2Score) TextView mPlayer2Score;
     @Bind(R.id.redBall) ImageView mRedBall;
@@ -54,49 +58,56 @@ public class ScoringActivity extends AppCompatActivity {
         mPlayer1Label.setText(mPlayer1.getName());
         mPlayer1Label.setTextColor(Color.RED);
         mPlayer2Label.setText(mPlayer2.getName());
+        mTotalFrames.setText("(" + mMatch.getFrames() + ")");
+        mPlayer1FramesWon.setText(mPlayer1.getFramesWon() + "");
+        mPlayer2FramesWon.setText(mPlayer2.getFramesWon() + "" );
         mPlayer1Score.setText(mPlayer1.getScore() + "");
         mPlayer2Score.setText(mPlayer2.getScore() + "");
 
         mRedBall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ballPotted("red");
+                if(mRedBallOn) {
+                    ballPotted("red");
+                }
             }
         });
         mYellowBall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ballPotted("yellow");
+                if(!mRedBallOn) {
+                    ballPotted("yellow");
+                }
             }
         });
         mGreenBall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ballPotted("green");
+                if(!mRedBallOn) ballPotted("green");
             }
         });
         mBrownBall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ballPotted("brown");
+                if(!mRedBallOn) ballPotted("brown");
             }
         });
         mBlueBall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ballPotted("blue");
+                if(!mRedBallOn) ballPotted("blue");
             }
         });
         mPinkBall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ballPotted("pink");
+                if(!mRedBallOn) ballPotted("pink");
             }
         });
         mBlackBall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ballPotted("black");
+                if(!mRedBallOn) ballPotted("black");
             }
         });
         mPlayer1Label.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +140,7 @@ public class ScoringActivity extends AppCompatActivity {
             mActivePlayer = 2;
         }
 
+        mRedBallOn = true;
         // change active player to red
     }
 
@@ -160,6 +172,7 @@ public class ScoringActivity extends AppCompatActivity {
         }
         toastMe(color + " ball potted, " + score + " points");
 
+        mRedBallOn = !mRedBallOn;
     }
 
     /**
