@@ -30,14 +30,26 @@ public class ScoringActivity extends AppCompatActivity {
     @Bind(R.id.player2FramesWon) TextView mPlayer2FramesWon;
     @Bind(R.id.player1Score) TextView mPlayer1Score;
     @Bind(R.id.player2Score) TextView mPlayer2Score;
+    @Bind(R.id.break1Label) TextView mPlayer1BreakLabel;
+    @Bind(R.id.break2Label) TextView mPlayer2BreakLabel;
+    @Bind(R.id.break1Score) TextView mPlayer1BreakScore;
+    @Bind(R.id.break2Score) TextView mPlayer2BreakScore;
     @Bind(R.id.redBall) ImageView mRedBall;
+    @Bind(R.id.redBallCount) TextView mRedBallCount;
     @Bind(R.id.yellowBall) ImageView mYellowBall;
+    @Bind(R.id.yellowBallCount) TextView mYellowBallCount;
     @Bind(R.id.greenBall) ImageView mGreenBall;
+    @Bind(R.id.greetBallCount) TextView mGreenBallCount;
     @Bind(R.id.brownBall) ImageView mBrownBall;
+    @Bind(R.id.brownBallCount) TextView mBrownBallCount;
     @Bind(R.id.blueBall) ImageView mBlueBall;
+    @Bind(R.id.blueBallCount) TextView mBlueBallCount;
     @Bind(R.id.pinkBall) ImageView mPinkBall;
+    @Bind(R.id.pinkBallCount) TextView mPinkBallCount;
     @Bind(R.id.blackBall) ImageView mBlackBall;
+    @Bind(R.id.blackBallCount) TextView mBlackBallCount;
     @Bind(R.id.ballsLayout) LinearLayout mBalls;
+    private Frame mCurrentFrame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +65,29 @@ public class ScoringActivity extends AppCompatActivity {
         mActivePlayer = 1;
 
         mMatch = new Match(mPlayer1, mPlayer2, intent.getIntExtra("frames", 1));
-        Log.d(TAG, "Match created " + mMatch.getPlayer1().getName() + ", " + mMatch.getPlayer2().getName() + ", best of " + mMatch.getFrames());
+        mCurrentFrame = new Frame();
 
         mPlayer1Label.setText(mPlayer1.getName());
         mPlayer1Label.setTextColor(Color.RED);
         mPlayer2Label.setText(mPlayer2.getName());
         mTotalFrames.setText("(" + mMatch.getFrames() + ")");
         mPlayer1FramesWon.setText(mPlayer1.getFramesWon() + "");
-        mPlayer2FramesWon.setText(mPlayer2.getFramesWon() + "" );
+        mPlayer2FramesWon.setText(mPlayer2.getFramesWon() + "");
         mPlayer1Score.setText(mPlayer1.getScore() + "");
         mPlayer2Score.setText(mPlayer2.getScore() + "");
+
+        mPlayer1BreakScore.setText(mPlayer1.getBreakScore() + "");
+        mPlayer2BreakScore.setText(mPlayer2.getBreakScore() + "");
+        mPlayer2BreakScore.setVisibility(View.INVISIBLE);
+        mPlayer2BreakLabel.setVisibility(View.INVISIBLE);
+
+        mRedBallCount.setText("");
+        mYellowBallCount.setText("");
+        mGreenBallCount.setText("");
+        mBrownBallCount.setText("");
+        mBlueBallCount.setText("");
+        mPinkBallCount.setText("");
+        mBlackBallCount.setText("");
 
         mRedBall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,11 +157,21 @@ public class ScoringActivity extends AppCompatActivity {
             mPlayer1Label.setTextColor(Color.RED);
             mPlayer2Label.setTextColor(Color.BLACK);
             mPlayer2.zeroBreakScore();
+            mPlayer2BreakScore.setText(mPlayer2.getBreakScore());
+            mPlayer1BreakLabel.setVisibility(View.VISIBLE);
+            mPlayer1BreakScore.setVisibility(View.VISIBLE);
+            mPlayer2BreakLabel.setVisibility(View.INVISIBLE);
+            mPlayer2BreakScore.setVisibility(View.INVISIBLE);
             mActivePlayer = 1;
         } else {
             mPlayer2Label.setTextColor(Color.RED);
             mPlayer1Label.setTextColor(Color.BLACK);
             mPlayer1.zeroBreakScore();
+            mPlayer2BreakScore.setText(mPlayer1.getBreakScore());
+            mPlayer1BreakLabel.setVisibility(View.INVISIBLE);
+            mPlayer1BreakScore.setVisibility(View.INVISIBLE);
+            mPlayer2BreakLabel.setVisibility(View.VISIBLE);
+            mPlayer2BreakScore.setVisibility(View.VISIBLE);
             mActivePlayer = 2;
         }
 
@@ -147,30 +182,54 @@ public class ScoringActivity extends AppCompatActivity {
     private void ballPotted(String color) {
         int score = 0;
         switch (color) {
-            case "black":
-                score += 1;
-            case "pink":
-                score += 1;
-            case "blue":
-                score += 1;
-            case "brown":
-                score += 1;
-            case "green":
-                score += 1;
-            case "yellow":
-                score += 1;
             case "red":
                 score += 1;
+                mCurrentFrame.incrementRed();
+                mRedBallCount.setText(mCurrentFrame.getNumRed() + "");
+                break;
+            case "black":
+                score += 7;
+                mCurrentFrame.incrementBlack();
+                mBlackBallCount.setText(mCurrentFrame.getNumBlack() + "");
+                break;
+            case "pink":
+                score += 6;
+                mCurrentFrame.incrementPink();
+                mPinkBallCount.setText(mCurrentFrame.getNumPink() + "");
+                break;
+            case "blue":
+                score += 5;
+                mCurrentFrame.incrementBlue();
+                mBlueBallCount.setText(mCurrentFrame.getNumBlue() + "");
+                break;
+            case "brown":
+                score += 4;
+                mCurrentFrame.incrementBrown();
+                mBrownBallCount.setText(mCurrentFrame.getNumBrown() + "");
+                break;
+            case "green":
+                score += 3;
+                mCurrentFrame.incrementGreen();
+                mGreenBallCount.setText(mCurrentFrame.getNumGreen() + "");
+                break;
+            case "yellow":
+                score += 2;
+                mCurrentFrame.incrementYellow();
+                mYellowBallCount.setText(mCurrentFrame.getNumYellow() + "");
+                break;
+
         }
 
         if (mActivePlayer == 1 ) {
             mPlayer1.incrementScore(score);
             mPlayer1Score.setText(mPlayer1.getScore() + "");
+            mPlayer1BreakLabel.setText(mPlayer1.getBreakScore() + "");
         } else {
             mPlayer2.incrementScore(score);
             mPlayer2Score.setText(mPlayer2.getScore() + "");
+            mPlayer2BreakScore.setText(mPlayer2.getBreakScore() + "");
         }
-        toastMe(color + " ball potted, " + score + " points");
+ //       toastMe(color + " ball potted, " + score + " points");
 
         mRedBallOn = !mRedBallOn;
     }

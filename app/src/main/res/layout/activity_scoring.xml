@@ -62,8 +62,50 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/scoresLayout"
+        android:id="@+id/breakScoresLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Break: "
+            android:id="@+id/break1Label"
+            android:layout_weight="1"
+            android:textSize="25sp"
+            android:gravity="right"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="147"
+            android:id="@+id/break1Score"
+            android:layout_weight="1"
+            android:textSize="25sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Break: "
+            android:id="@+id/break2Label"
+            android:layout_weight="1"
+            android:textSize="25sp"
+            android:gravity="right"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="147"
+            android:id="@+id/break2Score"
+            android:layout_weight="1"
+            android:textSize="25sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/ballsLayout"
-        android:layout_below="@+id/scoresLayout">
+        android:layout_below="@+id/breakScoresLayout">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -113,6 +155,90 @@
             android:id="@+id/blackBall"
             android:layout_weight="1"
             android:src="@drawable/black_ball"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/ballsLayout"
+        android:layout_alignBottom="@+id/ballsLayout"
+        android:layout_alignLeft="@+id/ballsLayout"
+        android:layout_alignRight="@+id/ballsLayout"
+        android:gravity="center_vertical"
+        android:id="@+id/ballCountLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15"
+            android:id="@+id/redBallCount"
+            android:textColor="#ffffffff"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15"
+            android:id="@+id/yellowBallCount"
+            android:textColor="#ffffffff"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:textIsSelectable="false"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15"
+            android:id="@+id/greetBallCount"
+            android:textColor="#ffffffff"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15"
+            android:id="@+id/brownBallCount"
+            android:textColor="#ffffffff"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15"
+            android:id="@+id/blueBallCount"
+            android:textColor="#ffffffff"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15"
+            android:id="@+id/pinkBallCount"
+            android:textColor="#ffffffff"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15"
+            android:id="@+id/blackBallCount"
+            android:textColor="#ffffffff"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"/>
     </LinearLayout>
 
     <TextView
