@@ -81,13 +81,20 @@ public class ScoringActivity extends AppCompatActivity {
         mPlayer2BreakScore.setVisibility(View.INVISIBLE);
         mPlayer2BreakLabel.setVisibility(View.INVISIBLE);
 
-        mRedBallCount.setText("");
-        mYellowBallCount.setText("");
-        mGreenBallCount.setText("");
-        mBrownBallCount.setText("");
-        mBlueBallCount.setText("");
-        mPinkBallCount.setText("");
-        mBlackBallCount.setText("");
+        mRedBallCount.setText("0");
+        mRedBallCount.setVisibility(View.INVISIBLE);
+        mYellowBallCount.setText("0");
+        mYellowBallCount.setVisibility(View.INVISIBLE);
+        mGreenBallCount.setText("0");
+        mGreenBallCount.setVisibility(View.INVISIBLE);
+        mBrownBallCount.setText("0");
+        mBrownBallCount.setVisibility(View.INVISIBLE);
+        mBlueBallCount.setText("0");
+        mBlueBallCount.setVisibility(View.INVISIBLE);
+        mPinkBallCount.setText("0");
+        mPinkBallCount.setVisibility(View.INVISIBLE);
+        mBlackBallCount.setText("0");
+        mBlackBallCount.setVisibility(View.INVISIBLE);
 
         mRedBall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,13 +145,13 @@ public class ScoringActivity extends AppCompatActivity {
         mPlayer1Label.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                togglePlayer(1);
+                if(mActivePlayer == 2) togglePlayer(1);
             }
         });
         mPlayer2Label.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                togglePlayer(2);
+                if(mActivePlayer == 1) togglePlayer(2);
             }
         });
     }
@@ -157,7 +164,7 @@ public class ScoringActivity extends AppCompatActivity {
             mPlayer1Label.setTextColor(Color.RED);
             mPlayer2Label.setTextColor(Color.BLACK);
             mPlayer2.zeroBreakScore();
-            mPlayer2BreakScore.setText(mPlayer2.getBreakScore());
+            mPlayer1BreakScore.setText(mPlayer1.getBreakScore() + "");
             mPlayer1BreakLabel.setVisibility(View.VISIBLE);
             mPlayer1BreakScore.setVisibility(View.VISIBLE);
             mPlayer2BreakLabel.setVisibility(View.INVISIBLE);
@@ -167,7 +174,7 @@ public class ScoringActivity extends AppCompatActivity {
             mPlayer2Label.setTextColor(Color.RED);
             mPlayer1Label.setTextColor(Color.BLACK);
             mPlayer1.zeroBreakScore();
-            mPlayer2BreakScore.setText(mPlayer1.getBreakScore());
+            mPlayer2BreakScore.setText(mPlayer2.getBreakScore() + "");
             mPlayer1BreakLabel.setVisibility(View.INVISIBLE);
             mPlayer1BreakScore.setVisibility(View.INVISIBLE);
             mPlayer2BreakLabel.setVisibility(View.VISIBLE);
@@ -185,37 +192,38 @@ public class ScoringActivity extends AppCompatActivity {
             case "red":
                 score += 1;
                 mCurrentFrame.incrementRed();
-                mRedBallCount.setText(mCurrentFrame.getNumRed() + "");
+                updateBallCount(mRedBallCount);
+            //    mRedBallCount.setText(mCurrentFrame.getNumRed() + "");
                 break;
             case "black":
                 score += 7;
                 mCurrentFrame.incrementBlack();
-                mBlackBallCount.setText(mCurrentFrame.getNumBlack() + "");
+                updateBallCount(mBlackBallCount);
                 break;
             case "pink":
                 score += 6;
                 mCurrentFrame.incrementPink();
-                mPinkBallCount.setText(mCurrentFrame.getNumPink() + "");
+                updateBallCount(mPinkBallCount);
                 break;
             case "blue":
                 score += 5;
                 mCurrentFrame.incrementBlue();
-                mBlueBallCount.setText(mCurrentFrame.getNumBlue() + "");
+                updateBallCount(mBlueBallCount);
                 break;
             case "brown":
                 score += 4;
                 mCurrentFrame.incrementBrown();
-                mBrownBallCount.setText(mCurrentFrame.getNumBrown() + "");
+                updateBallCount(mBrownBallCount);
                 break;
             case "green":
                 score += 3;
                 mCurrentFrame.incrementGreen();
-                mGreenBallCount.setText(mCurrentFrame.getNumGreen() + "");
+                updateBallCount(mGreenBallCount);
                 break;
             case "yellow":
                 score += 2;
                 mCurrentFrame.incrementYellow();
-                mYellowBallCount.setText(mCurrentFrame.getNumYellow() + "");
+                updateBallCount(mYellowBallCount);
                 break;
 
         }
@@ -223,7 +231,7 @@ public class ScoringActivity extends AppCompatActivity {
         if (mActivePlayer == 1 ) {
             mPlayer1.incrementScore(score);
             mPlayer1Score.setText(mPlayer1.getScore() + "");
-            mPlayer1BreakLabel.setText(mPlayer1.getBreakScore() + "");
+            mPlayer1BreakScore.setText(mPlayer1.getBreakScore() + "");
         } else {
             mPlayer2.incrementScore(score);
             mPlayer2Score.setText(mPlayer2.getScore() + "");
@@ -232,6 +240,12 @@ public class ScoringActivity extends AppCompatActivity {
  //       toastMe(color + " ball potted, " + score + " points");
 
         mRedBallOn = !mRedBallOn;
+    }
+
+    private void updateBallCount(TextView thisBall) {
+        int count = Integer.parseInt(thisBall.getText().toString());
+        if(count == 0) thisBall.setVisibility(View.VISIBLE);
+        thisBall.setText(++count + "");
     }
 
     /**
