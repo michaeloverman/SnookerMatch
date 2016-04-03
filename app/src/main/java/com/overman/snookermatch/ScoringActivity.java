@@ -21,7 +21,16 @@ public class ScoringActivity extends AppCompatActivity {
     private Player mPlayer2;
     private Match mMatch;
     private int mActivePlayer;
+    private static final int RED = 1;
     private Boolean mRedBallOn = true;
+    public static final int YELLOW = 2;
+    public static final int GREEN = 3;
+    public static final int BROWN = 4;
+    public static final int BLUE = 5;
+    public static final int PINK = 6;
+    public static final int BLACK = 7;
+    private int mBallOn = RED;
+
 
     @Bind(R.id.player1Name) TextView mPlayer1Label;
     @Bind(R.id.player2Name) TextView mPlayer2Label;
@@ -62,9 +71,10 @@ public class ScoringActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mPlayer1 = new Player(intent.getStringExtra("name1"));
         mPlayer2 = new Player(intent.getStringExtra("name2"));
+        int frames = intent.getIntExtra("frames", 1);
         mActivePlayer = 1;
 
-        mMatch = new Match(mPlayer1, mPlayer2, intent.getIntExtra("frames", 1));
+        mMatch = new Match(mPlayer1, mPlayer2, frames);
         mCurrentFrame = new Frame();
 
         mPlayer1Label.setText(mPlayer1.getName());
@@ -99,8 +109,8 @@ public class ScoringActivity extends AppCompatActivity {
         mRedBall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mRedBallOn) {
-                    ballPotted("red");
+                if (mRedBallOn) {
+                    ballPotted(RED);
                 }
             }
         });
@@ -108,38 +118,37 @@ public class ScoringActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!mRedBallOn) {
-                    ballPotted("yellow");
-                }
+                    ballPotted(YELLOW);
             }
         });
         mGreenBall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mRedBallOn) ballPotted("green");
+                if(!mRedBallOn) ballPotted(GREEN);
             }
         });
         mBrownBall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mRedBallOn) ballPotted("brown");
+                if(!mRedBallOn) ballPotted(BROWN);
             }
         });
         mBlueBall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mRedBallOn) ballPotted("blue");
+                if(!mRedBallOn) ballPotted(BLUE);
             }
         });
         mPinkBall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mRedBallOn) ballPotted("pink");
+                if(!mRedBallOn) ballPotted(PINK);
             }
         });
         mBlackBall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mRedBallOn) ballPotted("black");
+                if(!mRedBallOn) ballPotted(BLACK);
             }
         });
         mPlayer1Label.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +157,19 @@ public class ScoringActivity extends AppCompatActivity {
                 if(mActivePlayer == 2) togglePlayer(1);
             }
         });
+        mPlayer1Score.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mActivePlayer == 2) togglePlayer(1);
+            }
+        });
         mPlayer2Label.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mActivePlayer == 1) togglePlayer(2);
+            }
+        });
+        mPlayer2Score.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mActivePlayer == 1) togglePlayer(2);
@@ -183,44 +204,43 @@ public class ScoringActivity extends AppCompatActivity {
         }
 
         mRedBallOn = true;
-        // change active player to red
     }
 
-    private void ballPotted(String color) {
+    private void ballPotted(int color) {
         int score = 0;
         switch (color) {
-            case "red":
+            case RED:
                 score += 1;
                 mCurrentFrame.incrementRed();
                 updateBallCount(mRedBallCount);
             //    mRedBallCount.setText(mCurrentFrame.getNumRed() + "");
                 break;
-            case "black":
+            case BLACK:
                 score += 7;
                 mCurrentFrame.incrementBlack();
                 updateBallCount(mBlackBallCount);
                 break;
-            case "pink":
+            case PINK:
                 score += 6;
                 mCurrentFrame.incrementPink();
                 updateBallCount(mPinkBallCount);
                 break;
-            case "blue":
+            case BLUE:
                 score += 5;
                 mCurrentFrame.incrementBlue();
                 updateBallCount(mBlueBallCount);
                 break;
-            case "brown":
+            case BROWN:
                 score += 4;
                 mCurrentFrame.incrementBrown();
                 updateBallCount(mBrownBallCount);
                 break;
-            case "green":
+            case GREEN:
                 score += 3;
                 mCurrentFrame.incrementGreen();
                 updateBallCount(mGreenBallCount);
                 break;
-            case "yellow":
+            case YELLOW:
                 score += 2;
                 mCurrentFrame.incrementYellow();
                 updateBallCount(mYellowBallCount);
