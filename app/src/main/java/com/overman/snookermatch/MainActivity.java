@@ -40,22 +40,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startScoring() {
-        Log.d(TAG, "in startScoreing()");
+        Log.d(TAG, "in startScoring()");
 
-        String name1, name2, frames;
+        String name1, name2;
+        int frames;
 
         if (mPlayer1Name.getText().length() != 0) name1 = mPlayer1Name.getText().toString();
         else name1 = "Ronnie O'Sullivan";
         if (mPlayer2Name.getText().length() != 0) name2 = mPlayer2Name.getText().toString();
         else name2 = "Stuart Bingham";
-        if (mFrames.getText().length() != 0) frames = mFrames.getText().toString();
-        else frames = "11";
+        if (mFrames.getText().length() != 0) frames = Integer.parseInt(mFrames.getText().toString());
+        else frames = 11;
 
         Intent intent = new Intent(this, ScoringActivity.class);
 
+
+
         intent.putExtra("name1", name1);
         intent.putExtra("name2", name2);
-        intent.putExtra("frames", Integer.parseInt(frames));
+        intent.putExtra("frames", frames);
         startActivity(intent);
     }
 }
