@@ -28,7 +28,7 @@ public class Frame {
         mNumPink = 0;
         mNumBlack = 0;
         mPointsOn = 147;
-        mNeedToWin = 74;
+        mNeedToWin = mPointsOn / 2 + 1;
     }
 
     public Player getWinner() {
@@ -82,29 +82,36 @@ public class Frame {
 
     public void incrementRed() {
         mNumRed += 1;
+        mPointsOn -= 1;
     }
 
     public void incrementBlack() {
         mNumBlack += 1;
+        mPointsOn -= 7;
     }
 
     public void incrementPink() {
         mNumPink += 1;
+        mPointsOn -= 7;
     }
 
     public void incrementBlue() {
         mNumBlue += 1;
+        mPointsOn -= 7;
     }
 
     public void incrementBrown() {
         mNumBrown += 1;
+        mPointsOn -= 7;
     }
 
     public void incrementGreen() {
         mNumGreen += 1;
+        mPointsOn -= 7;
     }
 
     public void incrementYellow() {
         mNumYellow += 1;
+        mPointsOn -= 7;
     }
 }

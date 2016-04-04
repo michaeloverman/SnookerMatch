@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Stack;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -30,8 +32,9 @@ public class ScoringActivity extends AppCompatActivity {
     public static final int BLACK = 7;
     private int mBallOn = RED;
     private Boolean mRedBallOn = true;
-    private static final float FADED = 0.5f;
+    private static final float FADED = 0.4f;
     private static final float SOLID = 1.0f;
+    private Stack<ScoreAction> mScoreStack;
 
 
     @Bind(R.id.player1Name) TextView mPlayer1Label;
@@ -45,6 +48,7 @@ public class ScoringActivity extends AppCompatActivity {
     @Bind(R.id.break2Label) TextView mPlayer2BreakLabel;
     @Bind(R.id.break1Score) TextView mPlayer1BreakScore;
     @Bind(R.id.break2Score) TextView mPlayer2BreakScore;
+    @Bind(R.id.pointsOn) TextView mPointsOn;
     @Bind(R.id.redBall) ImageView mRedBall;
     @Bind(R.id.redBallCount) TextView mRedBallCount;
     @Bind(R.id.yellowBall) ImageView mYellowBall;
@@ -78,6 +82,7 @@ public class ScoringActivity extends AppCompatActivity {
 
         mMatch = new Match(mPlayer1, mPlayer2, frames);
         mCurrentFrame = new Frame();
+        mScoreStack = new Stack<ScoreAction>();
 
         mPlayer1Label.setText(mPlayer1.getName());
         mPlayer1Label.setTextColor(Color.RED);
@@ -86,12 +91,15 @@ public class ScoringActivity extends AppCompatActivity {
         mPlayer1FramesWon.setText(mPlayer1.getFramesWon() + "");
         mPlayer2FramesWon.setText(mPlayer2.getFramesWon() + "");
         mPlayer1Score.setText(mPlayer1.getScore() + "");
+        mPlayer1Score.setTextColor(Color.RED);
         mPlayer2Score.setText(mPlayer2.getScore() + "");
 
         mPlayer1BreakScore.setText(mPlayer1.getBreakScore() + "");
         mPlayer2BreakScore.setText(mPlayer2.getBreakScore() + "");
         mPlayer2BreakScore.setVisibility(View.INVISIBLE);
         mPlayer2BreakLabel.setVisibility(View.INVISIBLE);
+
+        mPointsOn.setText(mCurrentFrame.getPointsOn() + "");
 
         mRedBallCount.setText("0");
         mRedBallCount.setVisibility(View.INVISIBLE);
@@ -190,7 +198,9 @@ public class ScoringActivity extends AppCompatActivity {
         // switch active player
         if(playerNumber == 1) {
             mPlayer1Label.setTextColor(Color.RED);
+            mPlayer1Score.setTextColor(Color.RED);
             mPlayer2Label.setTextColor(Color.BLACK);
+            mPlayer2Score.setTextColor(Color.BLACK);
             mPlayer2.zeroBreakScore();
             mPlayer1BreakScore.setText(mPlayer1.getBreakScore() + "");
             mPlayer1BreakLabel.setVisibility(View.VISIBLE);
@@ -200,7 +210,9 @@ public class ScoringActivity extends AppCompatActivity {
             mActivePlayer = 1;
         } else {
             mPlayer2Label.setTextColor(Color.RED);
+            mPlayer2Score.setTextColor(Color.RED);
             mPlayer1Label.setTextColor(Color.BLACK);
+            mPlayer1Score.setTextColor(Color.BLACK);
             mPlayer1.zeroBreakScore();
             mPlayer2BreakScore.setText(mPlayer2.getBreakScore() + "");
             mPlayer1BreakLabel.setVisibility(View.INVISIBLE);
@@ -211,6 +223,7 @@ public class ScoringActivity extends AppCompatActivity {
         }
 
         mRedBallOn = true;
+        fadeBalls();
     }
 
     private void ballPotted(int color) {
@@ -259,15 +272,18 @@ public class ScoringActivity extends AppCompatActivity {
             mPlayer1.incrementScore(score);
             mPlayer1Score.setText(mPlayer1.getScore() + "");
             mPlayer1BreakScore.setText(mPlayer1.getBreakScore() + "");
+            mScoreStack.add(new ScoreAction(1, score));
         } else {
             mPlayer2.incrementScore(score);
             mPlayer2Score.setText(mPlayer2.getScore() + "");
             mPlayer2BreakScore.setText(mPlayer2.getBreakScore() + "");
+            mScoreStack.add(new ScoreAction(2, score));
         }
  //       toastMe(color + " ball potted, " + score + " points");
 
         mRedBallOn = !mRedBallOn;
         fadeBalls();
+        mPointsOn.setText(mCurrentFrame.getPointsOn() + "");
     }
 
     private void fadeBalls() {

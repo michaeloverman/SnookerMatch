@@ -270,4 +270,27 @@
         android:textSize="20sp"
         android:layout_toRightOf="@+id/bestOfFrames"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Points On:"
+        android:id="@+id/pointsOnLabel"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/scoresLayout"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="147"
+        android:id="@+id/pointsOn"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_below="@+id/pointsOnLabel"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>
