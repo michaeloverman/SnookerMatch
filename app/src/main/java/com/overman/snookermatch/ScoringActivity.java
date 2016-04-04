@@ -22,7 +22,6 @@ public class ScoringActivity extends AppCompatActivity {
     private Match mMatch;
     private int mActivePlayer;
     private static final int RED = 1;
-    private Boolean mRedBallOn = true;
     public static final int YELLOW = 2;
     public static final int GREEN = 3;
     public static final int BROWN = 4;
@@ -30,6 +29,9 @@ public class ScoringActivity extends AppCompatActivity {
     public static final int PINK = 6;
     public static final int BLACK = 7;
     private int mBallOn = RED;
+    private Boolean mRedBallOn = true;
+    private static final float FADED = 0.5f;
+    private static final float SOLID = 1.0f;
 
 
     @Bind(R.id.player1Name) TextView mPlayer1Label;
@@ -95,16 +97,22 @@ public class ScoringActivity extends AppCompatActivity {
         mRedBallCount.setVisibility(View.INVISIBLE);
         mYellowBallCount.setText("0");
         mYellowBallCount.setVisibility(View.INVISIBLE);
+        mYellowBall.setAlpha(FADED);
         mGreenBallCount.setText("0");
         mGreenBallCount.setVisibility(View.INVISIBLE);
+        mGreenBall.setAlpha(FADED);
         mBrownBallCount.setText("0");
         mBrownBallCount.setVisibility(View.INVISIBLE);
+        mBrownBall.setAlpha(FADED);
         mBlueBallCount.setText("0");
         mBlueBallCount.setVisibility(View.INVISIBLE);
+        mBlueBall.setAlpha(FADED);
         mPinkBallCount.setText("0");
         mPinkBallCount.setVisibility(View.INVISIBLE);
+        mPinkBall.setAlpha(FADED);
         mBlackBallCount.setText("0");
         mBlackBallCount.setVisibility(View.INVISIBLE);
+        mBlackBall.setAlpha(FADED);
 
         mRedBall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,8 +125,7 @@ public class ScoringActivity extends AppCompatActivity {
         mYellowBall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mRedBallOn) {
-                    ballPotted(YELLOW);
+                if(!mRedBallOn) ballPotted(YELLOW);
             }
         });
         mGreenBall.setOnClickListener(new View.OnClickListener() {
@@ -260,12 +267,36 @@ public class ScoringActivity extends AppCompatActivity {
  //       toastMe(color + " ball potted, " + score + " points");
 
         mRedBallOn = !mRedBallOn;
+        fadeBalls();
     }
 
+    private void fadeBalls() {
+        if(mRedBallOn) {
+            mRedBall.setAlpha(SOLID);
+            mYellowBall.setAlpha(FADED);
+            mGreenBall.setAlpha(FADED);
+            mBrownBall.setAlpha(FADED);
+            mBlueBall.setAlpha(FADED);
+            mPinkBall.setAlpha(FADED);
+            mBlackBall.setAlpha(FADED);
+        } else {
+            mRedBall.setAlpha(FADED);
+            mYellowBall.setAlpha(SOLID);
+            mGreenBall.setAlpha(SOLID);
+            mBrownBall.setAlpha(SOLID);
+            mBlueBall.setAlpha(SOLID);
+            mPinkBall.setAlpha(SOLID);
+            mBlackBall.setAlpha(SOLID);
+        }
+
+    }
     private void updateBallCount(TextView thisBall) {
         int count = Integer.parseInt(thisBall.getText().toString());
         if(count == 0) thisBall.setVisibility(View.VISIBLE);
         thisBall.setText(++count + "");
+        if(mCurrentFrame.getNumColors() >= 15) {
+            mBallOn = mCurrentFrame.getNumColors() - 13;
+        }
     }
 
     /**

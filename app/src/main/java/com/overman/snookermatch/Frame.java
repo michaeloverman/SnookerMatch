@@ -75,6 +75,11 @@ public class Frame {
         return mNeedToWin;
     }
 
+    public int getNumColors() {
+        return mNumYellow + mNumGreen + mNumBrown + mNumBlue
+                + mNumPink + mNumBlack;
+    }
+
     public void incrementRed() {
         mNumRed += 1;
     }
