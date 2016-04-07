@@ -169,7 +169,9 @@
         android:layout_alignLeft="@+id/ballsLayout"
         android:layout_alignRight="@+id/ballsLayout"
         android:gravity="center_vertical"
-        android:id="@+id/ballCountLayout">
+        android:id="@+id/ballCountLayout"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false">
 
         <TextView
             android:layout_width="wrap_content"

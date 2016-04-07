@@ -30,7 +30,7 @@ public class ScoringActivity extends AppCompatActivity {
     public static final int BLUE = 5;
     public static final int PINK = 6;
     public static final int BLACK = 7;
-    private int mBallOn = RED;
+    private int mBallOn = BLACK;
     private Boolean mRedBallOn = true;
     private static final float FADED = 0.4f;
     private static final float SOLID = 1.0f;
@@ -227,61 +227,49 @@ public class ScoringActivity extends AppCompatActivity {
     }
 
     private void ballPotted(int color) {
-        int score = 0;
         switch (color) {
             case RED:
-                score += 1;
                 mCurrentFrame.incrementRed();
-                updateBallCount(mRedBallCount);
-            //    mRedBallCount.setText(mCurrentFrame.getNumRed() + "");
                 break;
             case BLACK:
-                score += 7;
                 mCurrentFrame.incrementBlack();
-                updateBallCount(mBlackBallCount);
                 break;
             case PINK:
-                score += 6;
                 mCurrentFrame.incrementPink();
-                updateBallCount(mPinkBallCount);
                 break;
             case BLUE:
-                score += 5;
                 mCurrentFrame.incrementBlue();
-                updateBallCount(mBlueBallCount);
                 break;
             case BROWN:
-                score += 4;
                 mCurrentFrame.incrementBrown();
-                updateBallCount(mBrownBallCount);
                 break;
             case GREEN:
-                score += 3;
                 mCurrentFrame.incrementGreen();
-                updateBallCount(mGreenBallCount);
                 break;
             case YELLOW:
-                score += 2;
                 mCurrentFrame.incrementYellow();
-                updateBallCount(mYellowBallCount);
                 break;
-
         }
+        updateBallCount();
 
         if (mActivePlayer == 1 ) {
-            mPlayer1.incrementScore(score);
+            mPlayer1.incrementScore(color);
             mPlayer1Score.setText(mPlayer1.getScore() + "");
             mPlayer1BreakScore.setText(mPlayer1.getBreakScore() + "");
-            mScoreStack.add(new ScoreAction(1, score));
+            mScoreStack.add(new ScoreAction(1, color));
         } else {
-            mPlayer2.incrementScore(score);
+            mPlayer2.incrementScore(color);
             mPlayer2Score.setText(mPlayer2.getScore() + "");
             mPlayer2BreakScore.setText(mPlayer2.getBreakScore() + "");
-            mScoreStack.add(new ScoreAction(2, score));
+            mScoreStack.add(new ScoreAction(2, color));
         }
  //       toastMe(color + " ball potted, " + score + " points");
 
-        mRedBallOn = !mRedBallOn;
+        if(mCurrentFrame.getNumRed() < 15 && mCurrentFrame.getNumColors() < 15)
+            mRedBallOn = !mRedBallOn;
+        else {
+
+        }
         fadeBalls();
         mPointsOn.setText(mCurrentFrame.getPointsOn() + "");
     }
@@ -306,13 +294,29 @@ public class ScoringActivity extends AppCompatActivity {
         }
 
     }
-    private void updateBallCount(TextView thisBall) {
-        int count = Integer.parseInt(thisBall.getText().toString());
-        if(count == 0) thisBall.setVisibility(View.VISIBLE);
+    private void updateBallCount() {
+        if(mCurrentFrame.getNumRed() == 0) mRedBallCount.setVisibility(View.INVISIBLE);
+        if(mCurrentFrame.getNumGreen() == 0) mGreenBallCount.setVisibility(View.INVISIBLE);
+        if(mCurrentFrame.getNumBrown() == 0) mBrownBallCount.setVisibility(View.INVISIBLE);
+        if(mCurrentFrame.getNumBlue() == 0) mBlueBallCount.setVisibility(View.INVISIBLE);
+        if(mCurrentFrame.getNumYellow() == 0) mYellowBallCount.setVisibility(View.INVISIBLE);
+        if(mCurrentFrame.getNumPink() == 0) mPinkBallCount.setVisibility(View.INVISIBLE);
+        if(mCurrentFrame.getNumBlack() == 0) mBlackBallCount.setVisibility(View.INVISIBLE);
+        mRedBallCount.setText(mCurrentFrame.getNumRed()+ "");
+        mYellowBallCount.setText(mCurrentFrame.getNumYellow() + "");
+        mGreenBallCount.setText(mCurrentFrame.getNumGreen() + "");
+        mBrownBallCount.setText(mCurrentFrame.getNumBrown() + "");
+        mBlueBallCount.setText(mCurrentFrame.getNumBlue() + "");
+        mPinkBallCount.setText(mCurrentFrame.getNumPink() + "");
+        mBlackBallCount.setText(mCurrentFrame.getNumBlack() + "");
+
+
+/*     if(count == 0) thisBall.setVisibility(View.VISIBLE);
         thisBall.setText(++count + "");
         if(mCurrentFrame.getNumColors() >= 15) {
             mBallOn = mCurrentFrame.getNumColors() - 13;
         }
+*/
     }
 
     /**
